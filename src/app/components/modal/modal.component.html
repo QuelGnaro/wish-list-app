@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">Crea nuovo item</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('cancel')"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <app-dynamic-form [form]="itemForm"></app-dynamic-form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="activeModal.close('confirm')">
+    Conferma
+  </button>
+</div>

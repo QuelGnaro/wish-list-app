@@ -1,0 +1,8 @@
+<button
+  class="toggle-button"
+  [ngClass]="{ on: isOn, off: !isOn }"
+  (click)="toggle()"
+  [style.backgroundColor]="isOn ? onColor : offColor"
+>
+  {{ isOn ? onText : offText }}
+</button>

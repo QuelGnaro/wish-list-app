@@ -1,0 +1,19 @@
+<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+  <li [ngbNavItem]="1">
+    <button ngbNavLink>Wishing</button>
+    <ng-template ngbNavContent
+      ><p>testo testo</p>
+      <app-item-list></app-item-list>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <button ngbNavLink>Acquired</button>
+    <ng-template ngbNavContent><app-item-list></app-item-list></ng-template>
+  </li>
+  <li [ngbNavItem]="3">
+    <button ngbNavLink>Impossible</button>
+    <ng-template ngbNavContent><app-item-list></app-item-list></ng-template>
+  </li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
