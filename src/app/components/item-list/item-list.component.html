@@ -1,6 +1,25 @@
 <div class="item-container">
-  <button (click)="openModal()">Nuovo Wish</button>
-  <button (click)="openGlobalMoneyModal()">Distribuisci denaro</button>
+  <div class="button-container">
+    <button (click)="openModal()" class="my-button" title="Aggiungi nuovo Wish">
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2921/2921226.png"
+        alt="Aggiungi Wish"
+        style="width: 25px; height: 25px"
+      />
+    </button>
+    <button
+      (click)="openGlobalMoneyModal()"
+      class="my-button"
+      title="Distribuisci denaro"
+    >
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2911/2911048.png"
+        alt="Distribuisci denaro"
+        style="width: 25px; height: 25px"
+      />
+    </button>
+  </div>
+
   <ng-container *ngFor="let item of items">
     <app-item class="w-100 mt-3" [item]="item"></app-item>
   </ng-container>
