@@ -51,26 +51,10 @@
           [isOn]="item!.purchased"
           (isOnChange)="onPurchaseHandler(item!.id)"
         ></app-toggle-button>
-
-        <!-- <button class="btn btn-sm btn-outline-primary" (click)="onEdit(item)">
-          Modifica
-        </button>
-        <button class="btn btn-sm btn-outline-danger" (click)="onDelete(item)">
-          Elimina
-        </button> -->
         <button class="my-button" (click)="openEditModal(item!)">
           Modifica
         </button>
         <button class="my-button" (click)="onDelete(item!.id)">Elimina</button>
-        <!-- <a
-          class="btn btn-sm btn-outline-secondary"
-          *ngIf="item.externalUrl"
-          [href]="item.externalUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vai al sito
-        </a> -->
         <a class="my-button" target="_blank" rel="noopener noreferrer">
           Link
         </a>
