@@ -63,10 +63,6 @@ export class ItemService {
   }
 
 
-  getCategories() {
-    //todo: get categories from google sheet
-  }
-
   deleteItem(id: string) {
     const body = new URLSearchParams();
     body.set('action', 'deleteItem');

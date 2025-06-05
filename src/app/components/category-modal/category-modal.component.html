@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title">Aggiungi Categoria</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="modal.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="mb-3">
+      <label for="categoryName" class="form-label">Nome Categoria</label>
+      <input
+        type="text"
+        id="categoryName"
+        formControlName="category"
+        class="form-control"
+        placeholder="Inserisci una categoria"
+      />
+      <div
+        class="text-danger mt-1"
+        *ngIf="form.get('category')?.invalid && form.get('category')?.touched"
+      >
+        Il nome della categoria è richiesto.
+      </div>
+    </div>
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="form.invalid || loading"
+    >
+      {{ loading ? "Salvataggio..." : "Salva" }}
+    </button>
+  </form>
+</div>

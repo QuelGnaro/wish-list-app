@@ -12,6 +12,7 @@ import { DynamicFormComponent } from '../components/dynamic-form/dynamic-form.co
 import { HttpClientModule } from '@angular/common/http';
 import { AddMoneyModalComponent } from '../components/add-money-modal/add-money-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CategoryModalComponent } from '../components/category-modal/category-modal.component';
 
 const sharedModules = [
   DynamicFormComponent, CommonModule, RouterModule, NgbNavModule, NgbProgressbarModule, NgbModule, NgbModalModule, HttpClientModule, ReactiveFormsModule, FormsModule
@@ -25,7 +26,8 @@ const sharedModules = [
     ItemListComponent,
     ToggleButtonComponent,
     ModalComponent,
-    AddMoneyModalComponent
+    AddMoneyModalComponent,
+    CategoryModalComponent
   ],
   imports: [
     ...sharedModules

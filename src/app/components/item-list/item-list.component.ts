@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemService } from '../../services/item.service';
 import { Item } from '../../models/item.class';
 import { AddMoneyModalComponent } from '../add-money-modal/add-money-modal.component';
+import { CategoryModalComponent } from '../category-modal/category-modal.component';
 
 
 @Component({
@@ -38,10 +39,8 @@ export class ItemListComponent {
   }
 
   openModal() {
-    import('../modal/modal.component').then(m => {
-      const modalRef = this.modalService.open(m.ModalComponent, { centered: true });
-      modalRef.componentInstance.itemToEdit = null;
-    });
+    const modalRef = this.modalService.open(ModalComponent, { centered: true });
+    modalRef.componentInstance.itemToEdit = null;
   }
 
 
@@ -66,6 +65,10 @@ export class ItemListComponent {
         });
       });
     });
+  }
+
+  openCategoryModal() {
+    this.modalService.open(CategoryModalComponent, { centered: true });
   }
 
 
