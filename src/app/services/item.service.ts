@@ -84,6 +84,22 @@ export class ItemService {
     );;;
   }
 
+  togglePurchaseStatus(id: string) {
+    const body = new URLSearchParams();
+    body.set('action', 'purchaseHandler');
+    body.set('id', id);
+
+    return this.http.post(this.$baseUrl, body.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      responseType: 'json' // Cambiato in json per gestire la risposta strutturata
+    }).pipe(
+      tap(() => {
+        this.refreshItemsSubject.next();
+      })
+    );
+  }
 
 
 

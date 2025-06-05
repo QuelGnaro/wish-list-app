@@ -39,4 +39,13 @@ export class ItemComponent {
     });
   }
 
+  onPurchaseHandler(id: string) {
+    this.itemService.togglePurchaseStatus(id).subscribe({
+      next: () => {
+        console.log("Item purchased");
+      }
+    });
+  }
+
+
 }

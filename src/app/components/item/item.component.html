@@ -47,7 +47,11 @@
 
       <!-- Bottoni in fondo -->
       <div class="d-flex justify-content-around w-100 mt-3">
-        <app-toggle-button></app-toggle-button>
+        <app-toggle-button
+          [isOn]="item!.purchased"
+          (isOnChange)="onPurchaseHandler(item!.id)"
+        ></app-toggle-button>
+
         <!-- <button class="btn btn-sm btn-outline-primary" (click)="onEdit(item)">
           Modifica
         </button>
