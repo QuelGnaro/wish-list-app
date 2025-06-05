@@ -25,9 +25,25 @@ export class ItemComponent {
 
 
 
-  openModal(item: Item) {
-    const modalRef = this.modalService.open(ModalComponent, { centered: true });
-    modalRef.componentInstance.itemToEdit = item;
+  openEditModal(item: any) {
+    const modalRef = this.modalService.open(ModalComponent, {
+      centered: true,
+      size: 'lg'
+    });
+
+    // Passa direttamente i dati dell'item alla modale
+    modalRef.componentInstance.itemData = item;
+    modalRef.componentInstance.title = 'Modifica Item';
+
+    modalRef.result.then(
+      (result) => {
+        if (result === 'confirm') {
+        }
+      },
+      (reason) => {
+        console.log('Modale chiusa:', reason);
+      }
+    );
   }
 
   onDelete(id: string) {
@@ -38,5 +54,4 @@ export class ItemComponent {
       }
     });
   }
-
 }

@@ -1,5 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title">Crea nuovo item</h4>
+  <h4 class="modal-title">
+    {{ title }}
+  </h4>
   <button
     type="button"
     class="btn-close"
@@ -9,7 +11,11 @@
 </div>
 
 <div class="modal-body">
-  <app-dynamic-form [form]="itemForm"></app-dynamic-form>
+  <app-dynamic-form
+    [form]="itemForm"
+    [formData]="itemData"
+    (formSubmitted)="confirm()"
+  ></app-dynamic-form>
 </div>
 
 <div class="modal-footer">

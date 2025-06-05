@@ -11,9 +11,6 @@ export class ItemService {
 
   $baseUrl = "https://script.google.com/macros/s/AKfycbwNl7x90zCx_7It29jlz1BZnv04J1fmvceotH10Nc3fqQ3TQjSU0vCm42HnF4zmUdY/exec";
 
-
-
-
   private refreshItemsSubject = new Subject<void>();
   refreshItems$ = this.refreshItemsSubject.asObservable();
 
@@ -31,7 +28,7 @@ export class ItemService {
       updatedAt: new Date().toISOString(),
       deleted: false
     };
-    console.log(newItem, "newItem");
+
 
     const body = new URLSearchParams();
     body.set('action', 'addItem');
@@ -67,7 +64,7 @@ export class ItemService {
 
 
   getCategories() {
-
+    //todo: get categories from google sheet
   }
 
   deleteItem(id: string) {
@@ -81,10 +78,45 @@ export class ItemService {
       tap(() => {
         this.refreshItemsSubject.next();
       })
-    );;;
+    );
   }
 
 
+  updateItem(item: any) {
+    const body = new URLSearchParams();
+    body.set('action', 'updateItem');
+    body.set('id', item.id);
 
+    // Solo campi modificabili
+    const editableFields = [
+      'itemName', 'description', 'targetPrice', 'quantity',
+      'imageUrl', 'category', 'type', 'externalUrl'
+    ];
 
+    editableFields.forEach(field => {
+      if (item[field] !== undefined) {
+        body.set(field, String(item[field]));
+      }
+    });
+
+    // Aggiorna sempre la data di modifica
+    body.set('updatedAt', new Date().toISOString());
+
+    return this.http.post(this.$baseUrl, body.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      responseType: 'text'
+    }).pipe(
+      map(response => {
+        if (response === 'OK') {
+          return { success: true };
+        }
+        throw new Error(response || 'Unknown error');
+      }),
+      tap(() => {
+        this.refreshItemsSubject.next();
+      })
+    );
+  }
 }

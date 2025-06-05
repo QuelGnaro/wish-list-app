@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IForm, IFormControl, IValidator } from '../../interface/form.interface';
 import { ItemService } from '../../services/item.service';
@@ -12,17 +12,46 @@ import { ItemService } from '../../services/item.service';
   styleUrl: './dynamic-form.component.scss'
 })
 export class DynamicFormComponent implements OnInit {
-
   private itemService = inject(ItemService);
+  fb = inject(FormBuilder);
+
+  @Input() form!: IForm;
+  @Input() itemId?: string; // Riceve l'ID dall'esterno
+  @Output() formSubmitted = new EventEmitter<void>(); // Emette evento al submit
+  @Input() formData?: any;
 
   isSubmitting = false;
-  @Input() form !: IForm;
-
-
-  fb = inject(FormBuilder);
+  isEditMode = false;
+  currentItemId: string | null = null;
   dynamicForm: FormGroup = this.fb.group({}, { updateOn: 'submit' });
 
   ngOnInit(): void {
+    this.initializeForm();
+
+    if (this.formData) {
+      this.loadFormData(this.formData);
+    }
+  }
+
+  loadFormData(data: any): void {
+    this.isEditMode = true;
+    this.currentItemId = data.id;
+
+    this.dynamicForm.patchValue({
+      itemName: data.itemName,
+      externalUrl: data.externalUrl,
+      imageUrl: data.imageUrl,
+      targetPrice: data.targetPrice,
+      quantity: data.quantity,
+      type: data.type,
+      category: data.category,
+      description: data.description
+    });
+
+    this.form.saveBtnLabel = 'Aggiorna';
+  }
+
+  initializeForm(): void {
     if (this.form?.formControls) {
       let formGroup: any = {};
       this.form.formControls.forEach((control: IFormControl) => {
@@ -36,7 +65,7 @@ export class DynamicFormComponent implements OnInit {
             if (val.validatorName === 'maxlength') controlValidators.push(Validators.maxLength(val.maxLength as number));
           });
         }
-        // !multiple checkbox management
+
         if (control.type === 'checkbox' && control.options) {
           const selectedValues = control.options
             .filter(option => option.selected)
@@ -52,20 +81,61 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dynamicForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true; // Disabilita il bottone
+      this.isSubmitting = true;
+      const formData = this.dynamicForm.value;
 
-      const newItem = this.dynamicForm.value;
-      this.itemService.createItem(newItem).subscribe({
-        next: () => {
-          this.resetForm();
-          this.isSubmitting = false; // Riabilita il bottone
-        },
-        error: (err) => {
-          console.log(err, "err");
-          this.isSubmitting = false; // Riabilita il bottone anche in caso di errore
-        }
-      });
+      if (this.isEditMode && this.currentItemId) {
+        this.updateItem(formData);
+      } else {
+        this.createItem(formData);
+      }
     }
+  }
+
+  private updateItem(formData: any): void {
+    const updatedData = {
+      id: this.currentItemId,
+      itemName: formData.itemName,
+      description: formData.description,
+      targetPrice: formData.targetPrice,
+      quantity: formData.quantity,
+      imageUrl: formData.imageUrl,
+      category: formData.category,
+      type: formData.type,
+      externalUrl: formData.externalUrl
+    };
+
+    this.itemService.updateItem(updatedData).subscribe({
+      next: () => {
+        this.handleSuccess();
+      },
+      error: (err) => {
+        this.handleError(err);
+      }
+    });
+  }
+
+  private createItem(formData: any): void {
+    this.itemService.createItem(formData).subscribe({
+      next: () => {
+        this.handleSuccess();
+      },
+      error: (err) => {
+        this.handleError(err);
+      }
+    });
+  }
+
+  private handleSuccess(): void {
+    this.resetForm();
+    this.isSubmitting = false;
+    this.formSubmitted.emit(); // Notifica il submit riuscito
+  }
+
+  private handleError(err: any): void {
+    console.error(err);
+    this.isSubmitting = false;
+    // Qui potresti aggiungere la gestione degli errori visibile all'utente
   }
 
   resetForm(): void {
@@ -75,6 +145,10 @@ export class DynamicFormComponent implements OnInit {
       control?.setErrors(null);
       control?.markAsUntouched();
     });
+    this.isEditMode = false;
+    this.currentItemId = null;
+    this.form.saveBtnLabel = 'Crea';
+    this.isSubmitting = false;
   }
 
   getValidationErrorMessage(control: IFormControl): string {
@@ -117,4 +191,5 @@ export class DynamicFormComponent implements OnInit {
       return 0;
     }
   }
+
 }
