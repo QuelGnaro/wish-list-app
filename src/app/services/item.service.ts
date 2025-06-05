@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Item } from '../models/item.class';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, Subject, tap } from 'rxjs';
+import { catchError, map, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -130,6 +130,27 @@ export class ItemService {
         }
         throw new Error(response || 'Unknown error');
       }),
+      tap(() => {
+        this.refreshItemsSubject.next();
+      })
+    );
+  }
+
+
+  updateMoneySaved(id: string, amount: number): Observable<any> {
+    console.log("updateMoneySaved", id, amount);
+
+    const body = new URLSearchParams();
+    body.set('action', 'addMoneyToItem');
+    body.set('id', id);
+    body.set('amount', amount.toString());
+
+    return this.http.post(this.$baseUrl, body.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      responseType: 'text' // o json se ritorni un oggetto
+    }).pipe(
       tap(() => {
         this.refreshItemsSubject.next();
       })

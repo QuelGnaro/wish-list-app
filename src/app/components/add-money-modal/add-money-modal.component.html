@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ title }}</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss()"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <div class="mb-3">
+    <label for="amount" class="form-label">
+      {{
+        mode === "single"
+          ? "Importo (max: " + (maxAmount | currency) + ")"
+          : "Importo totale da distribuire"
+      }}
+    </label>
+    <input
+      type="number"
+      class="form-control"
+      id="amount"
+      [(ngModel)]="amount"
+      [min]="0"
+      [max]="maxAllowed"
+      step="0.01"
+    />
+  </div>
+
+  <div *ngIf="mode === 'distribute'" class="alert alert-info mt-3">
+    <i class="bi bi-info-circle"></i>
+    L'importo verrà distribuito equamente tra {{ eligibleItemsCount }} oggetti
+    non completati ({{ amount! / eligibleItemsCount! | currency }} ciascuno)
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="activeModal.dismiss()"
+  >
+    Annulla
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="confirm()"
+    [disabled]="!amount || amount <= 0 || isSubmitting"
+  >
+    {{ confirmLabel }}
+    <span
+      *ngIf="isSubmitting"
+      class="ms-2 spinner-border spinner-border-sm"
+    ></span>
+  </button>
+</div>

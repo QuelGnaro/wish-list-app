@@ -1,5 +1,6 @@
 <div class="item-container">
   <button (click)="openModal()">Nuovo Wish</button>
+  <button (click)="openGlobalMoneyModal()">Distribuisci denaro</button>
   <ng-container *ngFor="let item of items">
     <app-item class="w-100 mt-3" [item]="item"></app-item>
   </ng-container>

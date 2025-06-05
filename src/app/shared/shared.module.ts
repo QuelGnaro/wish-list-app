@@ -10,9 +10,11 @@ import { ToggleButtonComponent } from '../components/toggle-button/toggle-button
 import { ModalComponent } from '../components/modal/modal.component';
 import { DynamicFormComponent } from '../components/dynamic-form/dynamic-form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddMoneyModalComponent } from '../components/add-money-modal/add-money-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const sharedModules = [
-  DynamicFormComponent, CommonModule, RouterModule, NgbNavModule, NgbProgressbarModule, NgbModule, NgbModalModule, HttpClientModule
+  DynamicFormComponent, CommonModule, RouterModule, NgbNavModule, NgbProgressbarModule, NgbModule, NgbModalModule, HttpClientModule, ReactiveFormsModule, FormsModule
 ];
 
 @NgModule({
@@ -23,10 +25,11 @@ const sharedModules = [
     ItemListComponent,
     ToggleButtonComponent,
     ModalComponent,
+    AddMoneyModalComponent
   ],
   imports: [
     ...sharedModules
   ],
-  exports: [...sharedModules]
+  exports: [...sharedModules,]
 })
 export class SharedModule { }
