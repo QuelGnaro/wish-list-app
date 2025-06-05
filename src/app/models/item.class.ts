@@ -14,14 +14,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 export type ItemType = 'WISH' | 'GIFT' | 'IMPOSSIBLE';
 
-export interface IItem {
-  id: string;
+export interface EditableItemFields {
   itemName: string;
-  description: string;
+  description?: string;
   targetPrice: number;
   quantity: number;
   imageUrl: string;
   category: string;
+  type: string;
+  externalUrl?: string;
+}
+
+export interface IItem extends EditableItemFields {
+  id: string;
   createdAt: Date;
   updatedAt: Date;
   moneySaved: number;

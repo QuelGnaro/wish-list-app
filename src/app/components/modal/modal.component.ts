@@ -1,10 +1,7 @@
-import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IForm } from '../../interface/form.interface';
 import { itemFormConfig } from '../../constants/item-form.constant';
-import { Item } from '../../models/item.class';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,11 +14,12 @@ export class ModalComponent {
   itemForm = itemFormConfig as IForm;
 
   @Input() title = 'Modale';
-  @Input() message = 'Messaggio generico';
+  @Input() itemData?: any; // Riceve direttamente i dati dell'item
 
+  constructor(public activeModal: NgbActiveModal) { }
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) { }
-
-
+  confirm() {
+    this.activeModal.close('confirm');
+  }
 
 }
