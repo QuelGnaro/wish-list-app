@@ -31,13 +31,15 @@
     </button>
   </div>
 
-  <ng-container *ngIf="loading">
-    <app-skeleton
-      class="w-100 mt-3"
-      *ngFor="let _ of [].constructor(5)"
-    ></app-skeleton>
-  </ng-container>
-  <ng-container *ngFor="let item of items">
-    <app-item class="w-100 mt-3" [item]="item"></app-item>
-  </ng-container>
+  <div class="wrapper">
+    <ng-container *ngIf="loading">
+      <app-skeleton
+        class="w-100 mt-3"
+        *ngFor="let _ of [].constructor(5)"
+      ></app-skeleton>
+    </ng-container>
+    <ng-container *ngFor="let item of items">
+      <app-item class="w-100 mt-3" [item]="item"></app-item>
+    </ng-container>
+  </div>
 </div>
