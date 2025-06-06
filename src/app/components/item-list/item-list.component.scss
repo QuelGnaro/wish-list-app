@@ -1,9 +1,9 @@
 .item-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 95vh;
+  overflow: hidden; /* imposta overflow per gestire correttamente lo scroll interno */
 }
 
 .button-container {
@@ -26,11 +26,19 @@
 }
 
 .wrapper {
-  width: 100%;
-  height: 100%;
-  background: #f1f1f1;
+  flex-grow: 1;
+  overflow-y: auto;
   padding: 1rem;
+  background: #f1f1f1;
   border-radius: 0.75rem;
   box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.1),
     inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
