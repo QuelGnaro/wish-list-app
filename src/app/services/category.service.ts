@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,12 @@ import { Observable, Subject, tap } from 'rxjs';
 export class CategoryService {
   $baseUrl = "https://script.google.com/macros/s/AKfycbwNl7x90zCx_7It29jlz1BZnv04J1fmvceotH10Nc3fqQ3TQjSU0vCm42HnF4zmUdY/exec";
 
-  private refreshCategoriesSubject = new Subject<void>();
-  refreshCategories$ = this.refreshCategoriesSubject.asObservable();
+  private categoriesSubject = new BehaviorSubject<string[]>([]);
+  public categories$ = this.categoriesSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   addCategory(name: string) {
     const body = new URLSearchParams();
@@ -23,12 +25,23 @@ export class CategoryService {
       responseType: 'text'
     }).pipe(
       tap(() => {
-        this.refreshCategoriesSubject.next();
+        this.loadCategories();
       })
     );
   }
 
-  getCategories() {
-    //todo: get categories from google sheet
+  loadCategories() {
+    const body = new URLSearchParams();
+    body.set('action', 'getCategories');
+    this.http.post<string[]>(this.$baseUrl, body.toString(), {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      responseType: 'json'
+    }).subscribe((categories) => {
+      this.categoriesSubject.next(categories);
+    });
   }
+
+  // getCategoriesSnapshot(): string[] {
+  //   return this.refreshCategoriesSubject.getValue();
+  // }
 }

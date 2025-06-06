@@ -103,7 +103,7 @@ export const itemFormConfig: IForm = {
       "placeholder": "",
       "class": "col-md-4",
       "type": "select",
-      "options": [{ "id": 1, "value": "Moto" }, { "id": 2, "value": "Casa" }, { "id": 3, "value": "Giochi" }],
+      "options": [],
       "validators": [{
         "validatorName": "required",
         "required": true,

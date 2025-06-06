@@ -3,6 +3,9 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IForm, IFormControl, IValidator } from '../../interface/form.interface';
 import { ItemService } from '../../services/item.service';
+import { CategoryService } from '../../services/category.service';
+import { itemFormConfig } from '../../constants/item-form.constant';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -14,6 +17,9 @@ import { ItemService } from '../../services/item.service';
 export class DynamicFormComponent implements OnInit {
   private itemService = inject(ItemService);
   fb = inject(FormBuilder);
+  categoryService = inject(CategoryService);
+
+  categories: string[] = [];
 
   @Input() form!: IForm;
   @Input() itemId?: string; // Riceve l'ID dall'esterno
@@ -26,12 +32,29 @@ export class DynamicFormComponent implements OnInit {
   dynamicForm: FormGroup = this.fb.group({}, { updateOn: 'submit' });
 
   ngOnInit(): void {
-    this.initializeForm();
+
+    this.categoryService.categories$
+      .pipe(filter(cats => cats.length > 0), take(1))
+      .subscribe((categories) => {
+        this.injectCategoriesIntoForm(categories);
+        this.initializeForm(); // crea il form solo dopo che hai le categorie
+      });
 
     if (this.formData) {
       this.loadFormData(this.formData);
     }
   }
+
+  private injectCategoriesIntoForm(categories: string[]): void {
+    const categoryControl = this.form.formControls.find(c => c.name === 'category');
+    if (categoryControl) {
+      categoryControl.options = categories.map((cat, index) => ({
+        id: index + 1,
+        value: cat
+      }));
+    }
+  }
+
 
   loadFormData(data: any): void {
     this.isEditMode = true;
@@ -64,6 +87,10 @@ export class DynamicFormComponent implements OnInit {
             if (val.validatorName === 'minlength') controlValidators.push(Validators.minLength(val.minLength as number));
             if (val.validatorName === 'maxlength') controlValidators.push(Validators.maxLength(val.maxLength as number));
           });
+        }
+
+        if (control.name === 'category' && (!control.options || control.options.length === 0)) {
+          control.options = this.categories?.map((cat, i) => ({ id: i + 1, value: cat })) ?? [];
         }
 
         if (control.type === 'checkbox' && control.options) {

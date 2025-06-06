@@ -29,6 +29,7 @@ export class CategoryModalComponent {
     this.categoryService.addCategory(categoryName).subscribe({
       next: () => {
         this.form.reset();
+        this.loading = false;
       },
       error: (err: any) => {
         console.error('Errore salvataggio categoria', err);
