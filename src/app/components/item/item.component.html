@@ -89,12 +89,7 @@
             style="width: 25px; height: 25px"
           />
         </button>
-        <button
-          class="my-button"
-          *ngIf="item!.externalUrl"
-          (click)="onDelete(item!.id)"
-          title="Vai al sito"
-        >
+        <button class="my-button" *ngIf="item!.externalUrl" title="Vai al sito">
           <a
             target="_blank"
             rel="noopener noreferrer"

@@ -10,7 +10,7 @@
     <button
       (click)="openCategoryModal()"
       class="my-button"
-      title="Aggiungi nuova Categoria"
+      title="Aggiungi nuov Categoria"
     >
       <img
         src="https://cdn-icons-png.flaticon.com/512/3603/3603574.png"
@@ -31,7 +31,9 @@
     </button>
   </div>
 
-  <ng-container *ngFor="let item of items">
-    <app-item class="w-100 mt-3" [item]="item"></app-item>
-  </ng-container>
+  <div class="scroll-container">
+    <ng-container *ngFor="let item of items">
+      <app-item class="w-100 mt-3" [item]="item"></app-item>
+    </ng-container>
+  </div>
 </div>
