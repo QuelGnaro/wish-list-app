@@ -15,6 +15,7 @@ import { CategoryModalComponent } from '../category-modal/category-modal.compone
 export class ItemListComponent {
   items: Item[] = [];
   isSubmitting: boolean = false;
+  loading: boolean = true;
 
   constructor(private modalService: NgbModal,
     private itemService: ItemService
@@ -26,6 +27,7 @@ export class ItemListComponent {
     this.itemService.getItems().subscribe({
       next: (items) => {
         this.items = items;
+        this.loading = false;
         console.log(this.items, "items");
       },
       error: (err) => console.error("Errore caricamento", err)

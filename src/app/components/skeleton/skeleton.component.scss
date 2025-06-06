@@ -1,0 +1,8 @@
+.placeholder {
+  min-height: 1rem;
+  background-color: #e0e0e0 !important;
+}
+
+.placeholder-glow .placeholder {
+  animation: placeholder-glow 1.5s ease-in-out infinite;
+}
