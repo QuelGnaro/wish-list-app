@@ -13,7 +13,7 @@
     <label for="amount" class="form-label">
       {{
         mode === "single"
-          ? "Importo (max: " + (maxAmount | currency) + ")"
+          ? "Importo (max: " + (maxAmount | currency : "EUR") + ")"
           : "Importo totale da distribuire"
       }}
     </label>
@@ -31,7 +31,10 @@
   <div *ngIf="mode === 'distribute'" class="alert alert-info mt-3">
     <i class="bi bi-info-circle"></i>
     L'importo verrà distribuito equamente tra {{ eligibleItemsCount }} oggetti
-    non completati ({{ amount! / eligibleItemsCount! | currency }} ciascuno)
+    non completati ({{
+      amount! / eligibleItemsCount! | currency : "EUR"
+    }}
+    ciascuno)
   </div>
 </div>
 

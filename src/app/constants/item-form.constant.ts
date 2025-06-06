@@ -2,7 +2,7 @@ import { __values } from "tslib";
 import { IForm } from "../interface/form.interface";
 
 export const itemFormConfig: IForm = {
-  formTitle: 'Item form',
+  formTitle: 'Aggiungi un Wish',
   saveBtnLabel: 'Crea',
   resetBtnLabel: 'Reset',
   formControls: [
