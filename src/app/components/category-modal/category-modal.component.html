@@ -31,7 +31,7 @@
       type="submit"
       [disabled]="form.invalid || loading"
     >
-      {{ loading ? "Salvataggio..." : "Salva" }}
+      {{ loading ? loadingText : "Salva" }}
     </button>
   </form>
 </div>

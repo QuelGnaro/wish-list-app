@@ -13,6 +13,13 @@ export class CategoryModalComponent {
   fb = inject(FormBuilder);
   categoryService = inject(CategoryService);
 
+  loadingText = 'Salvataggio';
+
+  private dotsCount = 0;
+  private maxDots = 3;
+  private loadingInterval?: any;
+
+
   loading = false;
 
   form: FormGroup = this.fb.group({
@@ -25,17 +32,37 @@ export class CategoryModalComponent {
     this.loading = true;
     const categoryName = this.form.value.category.trim();
 
-
+    this.startLoadingAnimation();
     this.categoryService.addCategory(categoryName).subscribe({
       next: () => {
         this.form.reset();
-        this.loading = false;
+        this.stopLoadingAnimation();
       },
       error: (err: any) => {
         console.error('Errore salvataggio categoria', err);
-        this.loading = false;
+        this.stopLoadingAnimation();
       }
     });
+  }
+
+
+
+
+  startLoadingAnimation() {
+    this.loading = true;
+    this.loadingText = 'Salvataggio';
+
+    this.loadingInterval = setInterval(() => {
+      this.dotsCount = (this.dotsCount + 1) % (this.maxDots + 1); // da 0 a maxDots
+      this.loadingText = 'Salvataggio' + '.'.repeat(this.dotsCount);
+    }, 500); // ogni 500ms cambia
+  }
+
+  stopLoadingAnimation() {
+    this.loading = false;
+    clearInterval(this.loadingInterval);
+    this.loadingInterval = undefined;
+    this.loadingText = 'Salva';
   }
 
 }
