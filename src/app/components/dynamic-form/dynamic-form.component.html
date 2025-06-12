@@ -19,6 +19,7 @@
         formControlName="{{ control.name }}"
         class="form-control"
         [type]="control.type"
+        [placeholder]="control.placeholder"
       />
       <small
         *ngIf="
@@ -36,7 +37,7 @@
     <div *ngIf="control.type === 'select'" [class]="control.class">
       <label class="form-label"> {{ control.label }}</label>
       <select class="form-select" formControlName="{{ control.name }}">
-        <option selected value="">Choose...</option>
+        <option selected value="">{{ control.placeholder }}</option>
         <ng-container>
           <option *ngFor="let option of control.options" [value]="option.value">
             {{ option.value }}
@@ -62,6 +63,7 @@
         <div class="form-check">
           <input
             formControlName="{{ control?.name }}"
+            [placeholder]="control.placeholder"
             [value]="row"
             class="form-check-input"
             type="radio"
@@ -93,6 +95,7 @@
       <ng-container *ngFor="let option of control.options">
         <div class="form-check">
           <input
+            [placeholder]="control.placeholder"
             [checked]="
               (dynamicForm.get(control.name)?.value || []).includes(
                 option.value
@@ -128,6 +131,7 @@
             id="{{ control.name }}"
             class="form-control"
             formControlName="{{ control.name }}"
+            [placeholder]="control.placeholder"
           ></textarea>
 
           <label id="charCounter" for="{{ control.name }}" class="counter"

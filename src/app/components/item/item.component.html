@@ -1,9 +1,9 @@
 <div class="card mb-3">
   <div class="row g-0 flex-column flex-md-row">
     <!-- Immagine -->
-    <div class="col-md-4">
+    <div class="col-md-4 h-100">
       <img
-        [src]="item?.imageUrl"
+        [src]="item?.imageUrl || 'assets/image_placeholder.png'"
         class="img-fluid rounded-start w-100 h-100 object-fit-cover"
         alt="..."
       />

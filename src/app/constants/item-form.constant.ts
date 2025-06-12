@@ -8,9 +8,9 @@ export const itemFormConfig: IForm = {
   formControls: [
     {
       "name": "itemName",
-      "label": "Item Name",
+      "label": "Nome",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci il nome del prodotto",
       "class": "col-md-4",
       "type": "text",
       "validators": [{
@@ -33,9 +33,9 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "externalUrl",
-      "label": "External Url",
+      "label": "Link al prodotto",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci il link al prodotto",
       "class": "col-md-4",
       "type": "text",
       "validators": [
@@ -43,24 +43,20 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "imageUrl",
-      "label": "Image",
+      "label": "URL immagine",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci l'URL dell'immagine",
       "class": "col-md-4",
       "type": "text",
-      "validators": [{
-        "validatorName": "required",
-        "required": true,
-        "message": "Image is required"
-      },
+      "validators": [
       ]
     },
 
     {
       "name": "targetPrice",
-      "label": "Target Price",
+      "label": "Prezzo",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci il prezzo",
       "class": "col-md-4",
       "type": "number",
       "validators": [{
@@ -72,9 +68,9 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "quantity",
-      "label": "Quantity",
+      "label": "Quantità",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci la quantità",
       "class": "col-md-4",
       "type": "number",
       "validators": [{
@@ -86,8 +82,8 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "type",
-      "label": "Item Type",
-      "placeholder": "",
+      "label": "Tipo",
+      "placeholder": "Seleziona il tipo",
       "class": "col-md-4",
       "type": "select",
       "options": [{ "id": 1, "value": "WISH" }, { "id": 2, "value": "GIFT" }, { "id": 3, "value": "IMPOSSIBLE" }],
@@ -99,8 +95,8 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "category",
-      "label": "Category",
-      "placeholder": "",
+      "label": "Categoria",
+      "placeholder": "Seleziona la categoria",
       "class": "col-md-4",
       "type": "select",
       "options": [],
@@ -112,9 +108,9 @@ export const itemFormConfig: IForm = {
     },
     {
       "name": "description",
-      "label": "Description",
+      "label": "Descrizione",
       "value": "",
-      "placeholder": "",
+      "placeholder": "Inserisci la descrizione",
       "class": "col-12",
       "type": "textarea",
       "validators": [{
